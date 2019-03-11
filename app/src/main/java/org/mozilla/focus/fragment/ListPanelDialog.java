@@ -23,10 +23,13 @@ import org.mozilla.focus.telemetry.TelemetryWrapper;
 
 public class ListPanelDialog extends DialogFragment {
 
+    public final static int TYPE_DEFAULT = 0;
     public final static int TYPE_DOWNLOADS = 1;
     public final static int TYPE_HISTORY = 2;
     public final static int TYPE_SCREENSHOTS = 3;
     public final static int TYPE_BOOKMARKS = 4;
+    public final static int TYPE_NEWS = 5;
+
 
     private NestedScrollView scrollView;
     private static final String TYPE = "TYPE";
@@ -186,6 +189,8 @@ public class ListPanelDialog extends DialogFragment {
                 return R.string.label_menu_my_shots;
             case TYPE_BOOKMARKS:
                 return R.string.label_menu_bookmark;
+            case TYPE_NEWS:
+                return R.string.label_menu_news;
         }
     }
 
@@ -200,6 +205,8 @@ public class ListPanelDialog extends DialogFragment {
                 return ScreenshotGridFragment.newInstance();
             case TYPE_BOOKMARKS:
                 return BookmarksFragment.newInstance();
+            case TYPE_NEWS:
+                return NewsFragment.newInstance();
         }
     }
 
@@ -225,6 +232,12 @@ public class ListPanelDialog extends DialogFragment {
                 break;
             case TYPE_SCREENSHOTS:
                 screenshotsTouchArea.setSelected(true);
+                break;
+            case TYPE_NEWS:
+                divider.setVisibility(View.GONE);
+                panelBottom.setVisibility(View.GONE);
+                scrollView.setPadding(0, 0, 0, 0);
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 break;
             default:
                 throw new RuntimeException("There is no view type " + getArguments().getInt(TYPE));

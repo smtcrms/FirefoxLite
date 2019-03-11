@@ -483,7 +483,7 @@ public class MainActivity extends BaseActivity implements FragmentListener,
         return Settings.getInstance(this).shouldBlockImages();
     }
 
-    private void showListPanel(int type) {
+    public void showListPanel(int type) {
         DialogFragment dialogFragment = ListPanelDialog.newInstance(type);
         dialogFragment.setCancelable(true);
         dialogFragment.show(getSupportFragmentManager(), "");
