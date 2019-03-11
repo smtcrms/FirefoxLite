@@ -13,10 +13,10 @@ import com.bumptech.glide.request.RequestOptions
 import org.mozilla.focus.R
 import org.mozilla.focus.fragment.PanelFragment
 import org.mozilla.focus.fragment.PanelFragmentStatusListener
-import org.mozilla.rocket.bhaskar.ItemPojo
+import org.mozilla.lite.partner.NewsItem
 
-class ContentAdapter(private val listener: ContentPanelListener) : RecyclerView.Adapter< NewsViewHolder>() {
-    private var items = listOf(ItemPojo())
+class ContentAdapter<T : NewsItem>(private val listener: ContentPanelListener) : RecyclerView.Adapter<NewsViewHolder<T>>() {
+    private lateinit var items: List<T>
 
 //    init {
 //        registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
@@ -31,32 +31,32 @@ class ContentAdapter(private val listener: ContentPanelListener) : RecyclerView.
 //        })
 //    }
 //
-//    object COMPARATOR : DiffUtil.ItemCallback<ItemPojo>() {
+//    object COMPARATOR : DiffUtil.ItemCallback<BhaskarItem>() {
 //
-//        override fun areItemsTheSame(oldItem: ItemPojo, newItem: ItemPojo): Boolean {
+//        override fun areItemsTheSame(oldItem: BhaskarItem, newItem: BhaskarItem): Boolean {
 //            return oldItem.id == newItem.id
 //        }
 //
-//        override fun areContentsTheSame(oldItem: ItemPojo, newItem: ItemPojo): Boolean {
+//        override fun areContentsTheSame(oldItem: BhaskarItem, newItem: BhaskarItem): Boolean {
 //            return oldItem == newItem
 //        }
 //    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder<T> {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_news, parent, false)
         return NewsViewHolder(v)
     }
 
-    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NewsViewHolder<T>, position: Int) {
         val item = getItem(position) ?: return
-        holder.bind(item, View.OnClickListener { listener.onItemClicked(item.detailUrl) })
+        holder.bind(item, View.OnClickListener { listener.onItemClicked(item.newsUrl) })
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
 
-    private fun getItem(index: Int): ItemPojo? {
+    private fun getItem(index: Int): T? {
         return if (index >= 0 && items.size > index) {
             items[index]
         } else {
@@ -64,7 +64,7 @@ class ContentAdapter(private val listener: ContentPanelListener) : RecyclerView.
         }
     }
 
-    fun setData(data: List<ItemPojo>) {
+    fun setData(data: List<T>) {
 //        val startPos = items.size
 //        val count = data.size - items.size
         this.items = data
@@ -83,22 +83,22 @@ class ContentAdapter(private val listener: ContentPanelListener) : RecyclerView.
     }
 }
 
-class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class NewsViewHolder<T : NewsItem>(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     companion object {
         var requestOptions = RequestOptions().apply { transforms(CenterCrop(), RoundedCorners(16)) }
     }
 
-    fun bind(item: ItemPojo, listener: View.OnClickListener) {
+    fun bind(item: T, listener: View.OnClickListener) {
         itemView.findViewById<View>(R.id.news_item).setOnClickListener(listener)
         itemView.findViewById<TextView>(R.id.news_item_headline).text = item.title
         itemView.findViewById<TextView>(R.id.news_item_source).text = "" // don't show for now
         itemView.findViewById<TextView>(R.id.news_item_time).text =
             DateUtils.getRelativeTimeSpanString(
-                item.publishTime, System.currentTimeMillis(), DateUtils.DAY_IN_MILLIS
+                item.time, System.currentTimeMillis(), DateUtils.DAY_IN_MILLIS
             )
         Glide.with(itemView.context)
-                .load(item.coverPic)
+                .load(item.imageUrl)
                 .apply(requestOptions)
                 .into(itemView.findViewById(R.id.news_item_image))
     }

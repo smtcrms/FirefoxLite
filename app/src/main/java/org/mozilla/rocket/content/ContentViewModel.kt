@@ -2,16 +2,16 @@ package org.mozilla.rocket.content
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import org.mozilla.rocket.bhaskar.ItemPojo
-import org.mozilla.rocket.bhaskar.Repository
+import org.mozilla.lite.partner.NewsItem
+import org.mozilla.lite.partner.Repository
 
-class ContentViewModel : ViewModel(), Repository.OnDataChangedListener {
-    var repository: Repository? = null
-    val items = MutableLiveData<List<ItemPojo>>()
+class ContentViewModel : ViewModel(), Repository.OnDataChangedListener<NewsItem> {
+    var repository: Repository<out NewsItem>? = null
+    val items = MutableLiveData<List<NewsItem>>()
 
     // the library use LiveData as callback to onDataChanged. So here will always on main thread
-    override fun onDataChanged(itemPojoList: MutableList<ItemPojo>?) {
-        val newList = ArrayList<ItemPojo>()
+    override fun onDataChanged(itemPojoList: MutableList<NewsItem>?) {
+        val newList = ArrayList<NewsItem>()
         // exclude existing items from itemPojoList
         items.value?.let {
             itemPojoList?.removeAll(it)

@@ -19,6 +19,7 @@ import android.widget.Button
 import kotlinx.android.synthetic.main.fragment_news.*
 import org.mozilla.focus.R
 import org.mozilla.focus.navigation.ScreenNavigator
+import org.mozilla.lite.partner.NewsItem
 import org.mozilla.rocket.content.ContentAdapter
 import org.mozilla.rocket.content.ContentRepository
 import org.mozilla.rocket.content.ContentViewModel
@@ -30,7 +31,7 @@ class NewsFragment : PanelFragment(), ContentAdapter.ContentPanelListener {
     private var recyclerView: RecyclerView? = null
     private var emptyView: View? = null
     private var progressView: View? = null
-    private var adapter: ContentAdapter? = null
+    private var adapter: ContentAdapter<NewsItem>? = null
     private var viewModel: ContentViewModel? = null
 
     override fun onCreateView(
