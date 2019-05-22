@@ -10,10 +10,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':cachedrequestloader')
 
-    implementation "com.android.support:appcompat-v7:$Versions.support"
+    implementation "androidx.appcompat:appcompat:1.0.2"
     testImplementation "junit:junit:$Versions.junit"
-    androidTestImplementation "com.android.support.test:runner:$Versions.test_runner"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:${Versions.espresso}"
+    androidTestImplementation "androidx.test:runner:1.1.1"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
     compileOnly "com.google.code.findbugs:annotations:${Versions.findbugs}"
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:${Versions.mockwebserver}"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"

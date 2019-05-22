@@ -10,11 +10,11 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(':urlutils')
-    implementation "com.android.support:appcompat-v7:${Versions.support}"
+    implementation "androidx.appcompat:appcompat:1.0.2"
     testImplementation "junit:junit:${Versions.junit}"
-    androidTestImplementation "com.android.support.test:runner:${Versions.test_runner}"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:${Versions.espresso}"
-    implementation "com.android.support:recyclerview-v7:${Versions.support}"
+    androidTestImplementation "androidx.test:runner:1.1.1"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
+    implementation "androidx.recyclerview:recyclerview:1.0.0"
     implementation project(':logger')
     implementation project(':third_party:glide:annotation')
     implementation project(':third_party:glide:library')
